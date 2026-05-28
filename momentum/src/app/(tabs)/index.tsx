@@ -1,11 +1,10 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import Navbar from '@/components/Navbar';
 import Cards from '@/components/Cards';
 function index() {
   return (
     <View style={styles.container}>
-      <Navbar />
+    
       <Cards />
     </View>
   );

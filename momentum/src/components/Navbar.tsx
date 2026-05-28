@@ -25,7 +25,10 @@ const style = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         width: "100%",
-        marginBottom: 10
+        marginTop: 50,
+        paddingInline: 20,
+        borderBottomWidth: 2,
+        borderBottomColor: colors.slate,
     },
     circleContainer: {
         width: 40,

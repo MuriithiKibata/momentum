@@ -5,13 +5,15 @@ import {
   EvilIcons,
   Ionicons,
 } from "@expo/vector-icons";
-
+import AntDesign from "@expo/vector-icons/AntDesign";
+import Navbar from "@/components/Navbar";
+import { colors } from "@/colors";
 
 export default function TabsLayout() {
     return (
       <Tabs
         screenOptions={{
-          headerShown: false,
+          header: () => <Navbar />,
           tabBarActiveTintColor: "#2563eb",
           tabBarInactiveTintColor: "#000000",
 
@@ -55,11 +57,11 @@ export default function TabsLayout() {
         />
 
         <Tabs.Screen
-          name="categories" // Matches the categories.tsx file
+          name="category" // Matches the categories.tsx file
           options={{
             title: "Categories",
             tabBarIcon: ({ color }) => (
-              <MaterialIcons name="category" size={24} color={color} />
+              <AntDesign name="appstore" size={24} color={color} />
             ),
           }}
         />

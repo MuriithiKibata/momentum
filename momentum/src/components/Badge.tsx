@@ -5,7 +5,7 @@ import { StyleSheet, StyleProp, ViewStyle, TextStyle } from 'react-native'
 type BadgePriority = 'High' | 'Medium' | 'Low';
 
 interface BadgeProps {
-    priority: BadgePriority;
+    priority?: BadgePriority;
     label: string;
     style?: StyleProp<ViewStyle>;
     textStyle?: StyleProp<TextStyle>;
