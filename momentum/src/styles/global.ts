@@ -60,4 +60,17 @@ export const globalStyles = StyleSheet.create({
 
     elevation: 10,
   },
+  shadow_small: {
+    backgroundColor: "#ffffff",
+
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 5,
+
+    elevation: 10,
+  },
 });
