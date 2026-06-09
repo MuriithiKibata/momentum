@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { globalStyles } from "@/styles/global";
 import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import Badge from "./Badge";
@@ -11,19 +11,48 @@ interface CardsProps {
     priority?: priority;
     completed?: boolean;
 }
-function Cards({priority = "Medium", title, description, completed = false}: CardsProps) {
-  return (
-    <View style={[globalStyles.flexContainer, globalStyles.card, borderColors[priority]]}>
-      <View style={globalStyles.flexRowContainer}>
-        <Checkbox style={styles.checkbox}/>
-        <View style={globalStyles.flexColumnContainer}>
-          <Text style={globalStyles.title}>Read On Performance Management</Text>
 
-          <Text style={globalStyles.text}>
+function Cards({priority = "Medium", title, description, completed = false}: CardsProps) {
+  const [checked, setChecked] = useState(false);
+
+
+  return (
+    <View
+      style={[
+        globalStyles.flexContainer,
+        globalStyles.card,
+        borderColors[priority],
+      ]}
+    >
+      <View style={globalStyles.flexRowContainer}>
+        <Checkbox
+          style={styles.checkbox}
+          value={completed ? true : checked}
+          disabled={completed}
+          onValueChange={(newValue) => setChecked(newValue)}
+        />
+        <View style={globalStyles.flexColumnContainer}>
+          <Text
+            style={[
+              globalStyles.title,
+            completed || checked ? globalStyles.textStrikethrough : null,
+            ]}
+          >
+            Read On Performance Management
+          </Text>
+
+          <Text
+            style={[
+              globalStyles.text,
+              completed || checked ? globalStyles.textStrikethrough : null,
+            ]}
+          >
             Write notes on what was taught in class and check if lecturer
             replied
           </Text>
+          {completed ? null :
           <Badge priority={priority} label="High Priority" />
+}
         </View>
       </View>
     </View>

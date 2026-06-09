@@ -23,6 +23,15 @@ export const globalStyles = StyleSheet.create({
     gap: 10,
   },
 
+  font: {
+    fontFamily: "Manrope",
+  },
+
+  textStrikethrough: {
+    textDecorationLine: "line-through",
+    textDecorationStyle: "solid",
+  },
+
   title: {
     fontFamily: "Manrope",
     fontSize: 24,
@@ -34,6 +43,22 @@ export const globalStyles = StyleSheet.create({
     fontFamily: "Manrope",
     fontSize: 16,
     lineHeight: 24,
+  },
+
+  textSmall: {
+    fontSize: 10,
+    fontWeight: "500",
+    color: "#6B7280",
+  },
+
+  fontWeightBold: {
+    fontWeight: 900,
+  },
+  fontWeightMedium: {
+    fontWeight: 600,
+  },
+  fontWeightlight: {
+    fontWeight: 400,
   },
 
   card: {

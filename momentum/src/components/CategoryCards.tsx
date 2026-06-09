@@ -43,7 +43,7 @@ function CategoryCards({category, description}: CategoryProps) {
           <Text style={[globalStyles.title, localStyles.titleMargin]}>
             {category}
           </Text>
-          <Text style={[globalStyles.paragraph, localStyles.textStyling]}>
+          <Text style={[globalStyles.paragraph, globalStyles.textSmall]}>
             {description}
           </Text>
         </View>
