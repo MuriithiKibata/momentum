@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
+import { Redirect } from "expo-router";
 export default function RootLayout() {
 
   const [fontsLoaded] = useFonts({
@@ -13,5 +14,10 @@ export default function RootLayout() {
   return <Stack
   screenOptions = {{
     headerShown: false,
-  }}/>;
+  }}>
+    
+  </Stack>;
+
+
+  
 }

@@ -1,5 +1,5 @@
 import React, { JSX } from 'react'
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Badge from "@/components/Badge";
 import { globalStyles } from "@/styles/global";
@@ -25,8 +25,7 @@ const iconMap: Record<string, JSX.Element> = {
 function CategoryCards({category, description}: CategoryProps) {
   return (
     <>
-      
-      <View style={[globalStyles.card, localStyles.cardWidth]}>
+      <TouchableOpacity style={[globalStyles.card, localStyles.cardWidth]}>
         <View style={[globalStyles.flexRowContainer]}>
           <View
             style={[
@@ -47,7 +46,7 @@ function CategoryCards({category, description}: CategoryProps) {
             {description}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     </>
   );
 }

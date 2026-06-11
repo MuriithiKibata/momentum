@@ -45,6 +45,10 @@ export const globalStyles = StyleSheet.create({
     lineHeight: 24,
   },
 
+  textLarge: {
+    fontSize: 40,
+  },
+
   textSmall: {
     fontSize: 10,
     fontWeight: "500",

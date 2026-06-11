@@ -73,7 +73,7 @@ export default function TabsLayout() {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="profile" // Automatically connects to profile.tsx
         options={{
           title: "Profile",
@@ -81,7 +81,7 @@ export default function TabsLayout() {
             <Ionicons name="person-outline" size={24} color={color} />
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="new_task"
         options={{
