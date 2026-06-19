@@ -1,10 +1,46 @@
 import { colors } from '@/colors';
 import { globalStyles } from '@/styles/global';
-import React from 'react'
+import React, {useState} from 'react'
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native'
 import Feather from "@expo/vector-icons/Feather";
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
+import { UserData } from '@/types';
+import * as SecureStore from 'expo-secure-store'
+import useLogin from '../Queries/loginQuery';
+
+
+
 function Login() {
+
+  const {handleLogin, loading, data } = useLogin()  
+  const [userData, setUserData] = useState<UserData>({
+    email: '',
+    password: '',
+  });
+
+
+  const handleChange = (name: string, text: string) => {
+    setUserData((prev) => {
+      return {
+        ...prev,
+        [name]: text
+      }
+    })
+  }
+
+
+  const handleSubmit = async () => {
+    const res = await  handleLogin(userData)
+
+    if (res.token) {
+      router.replace('/(tabs)')
+    }
+  }
+
+  
+
+
+
   return (
     <View style={[localStyles.centering, localStyles.mainContainer]}>
       <View
@@ -43,10 +79,16 @@ function Login() {
           <TextInput
             placeholder="Email"
             style={[localStyles.input, globalStyles.shadow_small]}
+            textContentType="emailAddress"
+            onChangeText={(text) => handleChange("email", text)}
           />
           <TextInput
             placeholder="Password"
             secureTextEntry
+            onChangeText={(text) => handleChange("password", text)}
+            textContentType="password"
+            returnKeyType="done"
+            onSubmitEditing={handleSubmit}
             style={[localStyles.input, globalStyles.shadow_small]}
           />
           <TouchableOpacity
@@ -56,22 +98,38 @@ function Login() {
               marginHorizontal: 35,
             }}
           >
-            <Text style={[localStyles.textColorPrimary, globalStyles.fontWeightMedium]}>Forgot Password?</Text>
+            <Text
+              style={[
+                localStyles.textColorPrimary,
+                globalStyles.fontWeightMedium,
+              ]}
+            >
+              Forgot Password?
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[globalStyles.shadow, localStyles.button]}
-            onPress={() => {}}
+            onPress={handleSubmit}
           >
-            <Text style={localStyles.buttonText}>Login</Text>
+            <Text style={localStyles.buttonText}>
+              {loading ? "Loading" : "Login"}
+            </Text>
             <Feather name="arrow-right" size={22} color="#FFFF" />
           </TouchableOpacity>
         </View>
         <View style={[globalStyles.flexRowContainer]}>
           <Text>Don't have an account? </Text>
           <Link href="/signup" style={{ textDecorationLine: "none" }} asChild>
-          <TouchableOpacity>
-            <Text style={[localStyles.textColorPrimary, globalStyles.fontWeightMedium]}>Sign Up</Text>
-          </TouchableOpacity>
+            <TouchableOpacity>
+              <Text
+                style={[
+                  localStyles.textColorPrimary,
+                  globalStyles.fontWeightMedium,
+                ]}
+              >
+                Signup
+              </Text>
+            </TouchableOpacity>
           </Link>
         </View>
       </View>

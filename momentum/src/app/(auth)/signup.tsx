@@ -1,6 +1,6 @@
 import { colors } from "@/colors";
 import { globalStyles } from "@/styles/global";
-import React from "react";
+import React, {useState} from "react";
 import {
   StyleSheet,
   View,
@@ -9,8 +9,44 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import { UserRegData } from "@/types";
+import useSignup from "../Queries/signupQuery";
 function Signup() {
+  const { handleLogin, loading } = useSignup()
+  const [ userRegData, setUserData] = useState<UserRegData>({
+    full_name: '',
+    email: '',
+    password: '',
+    passwordConfirmation: ''
+
+  })
+
+
+
+  const handleChange = (key: string, value: string) => {
+    setUserData((prev) => {
+      return {
+      ...prev,
+      [key]:  value
+      }
+    })
+  }
+
+
+  const isMatching = userRegData.password !== '' && userRegData.password === userRegData.passwordConfirmation
+  console.log(userRegData)
+
+
+  const handleSignUp = async () => {
+   const res = await handleLogin(userRegData)
+
+   console.log(res)
+   if (res.token) {
+    router.replace("/(tabs)")
+   }
+  }
+
   return (
     <View style={[localStyles.centering, localStyles.mainContainer]}>
       <View
@@ -49,15 +85,29 @@ function Signup() {
           <TextInput
             placeholder="Full Name"
             style={[localStyles.input, globalStyles.shadow_small]}
+            onChangeText={(text) => handleChange("full_name", text)}
           />
           <TextInput
             placeholder="Email"
             style={[localStyles.input, globalStyles.shadow_small]}
+            onChangeText={(text) => handleChange("email", text)}
           />
           <TextInput
             placeholder="Password"
             secureTextEntry
             style={[localStyles.input, globalStyles.shadow_small]}
+            onChangeText={(text) => handleChange("password", text)}
+          />
+          <TextInput
+            placeholder="Confirm Password"
+            secureTextEntry
+            textContentType="password"
+            returnKeyType="done"
+            onSubmitEditing={handleSignUp}
+            style={[localStyles.input, globalStyles.shadow_small]}
+            onChangeText={(text) => {
+              handleChange("passwordConfirmation", text);
+            }}
           />
           <TouchableOpacity
             style={{
@@ -76,8 +126,13 @@ function Signup() {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[globalStyles.shadow, localStyles.button]}
-            onPress={() => {}}
+            style={[
+              globalStyles.shadow,
+              localStyles.button,
+              !isMatching ? { opacity: 0.5, backgroundColor: "#A9A9A9" } : {},
+            ]}
+            disabled={!isMatching}
+            onPress={handleSignUp}
           >
             <Text style={localStyles.buttonText}>Signup</Text>
             <Feather name="arrow-right" size={22} color="#FFFF" />
@@ -86,16 +141,16 @@ function Signup() {
         <View style={[globalStyles.flexRowContainer]}>
           <Text>Have an account? </Text>
           <Link href="/login" style={{ textDecorationLine: "none" }} asChild>
-          <TouchableOpacity>
-            <Text
-              style={[
-                localStyles.textColorPrimary,
-                globalStyles.fontWeightMedium,
-              ]}
-            >
-             Login
-            </Text>
-          </TouchableOpacity>
+            <TouchableOpacity>
+              <Text
+                style={[
+                  localStyles.textColorPrimary,
+                  globalStyles.fontWeightMedium,
+                ]}
+              >
+                Login
+              </Text>
+            </TouchableOpacity>
           </Link>
         </View>
       </View>
@@ -161,6 +216,7 @@ const localStyles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     fontSize: 76,
+    
   },
 
   buttonText: {
