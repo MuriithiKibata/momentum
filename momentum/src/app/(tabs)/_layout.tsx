@@ -10,6 +10,10 @@ import Navbar from "@/components/Navbar";
 import { colors } from "@/colors";
 
 export default function TabsLayout() {
+
+   console.log("Running");
+
+
   return (
     <Tabs
       screenOptions={{

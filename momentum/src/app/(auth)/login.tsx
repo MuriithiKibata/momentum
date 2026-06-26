@@ -31,7 +31,7 @@ function Login() {
 
   const handleSubmit = async () => {
     const res = await  handleLogin(userData)
-
+    console.log(res)
     if (res.token) {
       router.replace('/(tabs)')
     }

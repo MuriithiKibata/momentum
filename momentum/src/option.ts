@@ -6,3 +6,11 @@ export const  POST_FETCH_OPTIONS = {
   },
 };
 
+export const GET_FETCH_OPTIONS = {
+  method: "GET",
+  headers: {
+    Accept: "application/json",
+   
+  },
+};
+

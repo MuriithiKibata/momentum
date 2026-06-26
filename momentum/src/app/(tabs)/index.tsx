@@ -5,10 +5,28 @@ import Cards from '@/components/Cards';
 import { colors } from '@/colors';
 import Feather from "@expo/vector-icons/Feather";
 import { router } from 'expo-router';
+import useTodos from '../Queries/todosQuery';
+
 function index() {
+
+const { loading, data} = useTodos()
+
+  if (loading) {
+    return (
+   <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+     <Text>Loading Session...</Text>
+   </View>
+    )
+  }
+
+  console.log(data)
+
   return (
     <View style={styles.container}>
+      {
+        
       <Cards />
+}
       <TouchableOpacity
         style={styles.button}
         onPress={() => {

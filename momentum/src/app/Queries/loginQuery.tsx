@@ -3,8 +3,8 @@ import useFetch from "@/Hooks/useFetch";
 import { UserData } from "@/types";
 import * as SecureStore from "expo-secure-store";
 import { POST_FETCH_OPTIONS } from "@/option";
-
-
+import { AuthStore } from "@/store";
+import {User} from "@/types" 
 const API_URL =
   Platform.OS === "android"
     ? "http://10.0.2.2:3000/login"
@@ -25,10 +25,12 @@ export default function useLogin() {
         body: JSON.stringify(userData)
       })
       if ( response && response.token) {
-       await SecureStore.setItemAsync("token", response?.token)
-      //  await SecureStore.setItemAsync("user", response.user)
-       console.log(response.user);
-       // Use a programmatic navigation method if needed
+        const user = {
+          FirstName: response.user.FirstName,
+          LastName: response.user.LastName,
+          token: response.token
+        }
+        await AuthStore.getState().setUser(user)
        return response
       } else {
         return error

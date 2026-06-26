@@ -35,7 +35,7 @@ function useFetch({url, retries = 3, retryDelay = 1000, options = {}, manual}: F
                 error: data.error,
                 reason: data.reason
             })
-            return
+            return null
           }   
 
           setData(data)

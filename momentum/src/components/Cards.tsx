@@ -3,16 +3,17 @@ import { globalStyles } from "@/styles/global";
 import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import Badge from "./Badge";
 import { Checkbox } from "expo-checkbox";
-
+import { Todo } from "@/types";
 type priority = "High" | "Medium" | "Low";
 interface CardsProps {
     title?: string;
     description?: string;
     priority?: priority;
     completed?: boolean;
+    todo?: Todo;
 }
 
-function Cards({priority = "Medium", title, description, completed = false}: CardsProps) {
+function Cards({priority = "Medium", title, description, completed = false, todo}: CardsProps) {
   const [checked, setChecked] = useState(false);
 
 
@@ -38,7 +39,7 @@ function Cards({priority = "Medium", title, description, completed = false}: Car
             completed || checked ? globalStyles.textStrikethrough : null,
             ]}
           >
-            Read On Performance Management
+            {todo?.Name}
           </Text>
 
           <Text

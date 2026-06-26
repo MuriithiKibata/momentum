@@ -91,6 +91,7 @@ function Signup() {
             placeholder="Email"
             style={[localStyles.input, globalStyles.shadow_small]}
             onChangeText={(text) => handleChange("email", text)}
+            textContentType="emailAddress"
           />
           <TextInput
             placeholder="Password"
