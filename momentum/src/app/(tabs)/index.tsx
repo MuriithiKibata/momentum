@@ -6,6 +6,7 @@ import { colors } from '@/colors';
 import Feather from "@expo/vector-icons/Feather";
 import { router } from 'expo-router';
 import useTodos from '../Queries/todosQuery';
+import { Todo } from '@/types';
 
 function index() {
 
@@ -19,19 +20,26 @@ const { loading, data} = useTodos()
     )
   }
 
-  console.log(data)
+
 
   return (
     <View style={styles.container}>
-      {
-        
-      <Cards />
-}
+      {data?.map((todo:Todo) => (
+
+        <Cards
+          key={todo.id}
+          todo={todo}
+          title={todo.Name}
+          description={todo.Description ?? undefined}
+          priority={todo.Priority}
+          completed={todo.Completed}
+        />
+      ))}
+
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-        router.push("/new_task");
-         
+          router.push("/new_task");
         }}
       >
         <Feather name="plus" size={24} color="#FFFF" />
@@ -42,6 +50,8 @@ const { loading, data} = useTodos()
 
 const styles = StyleSheet.create({
   container: {
+    display: "flex",
+    gap: 15,
     flex: 1,
     paddingBlock: 40,
     paddingInline: 20,

@@ -4,13 +4,24 @@ import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 
 import { Calendar, toDateId } from "@marceloterreiro/flash-calendar";
 import { colors } from "@/colors";
 import RadioGroup from "react-native-radio-buttons-group";
+import useGetCategory from "../Queries/categoryQuery";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { Category } from "@/types";
 function new_task() {
   const [category, setCategory] = useState<string | null>(null)
   const categories = ["Work", "Personal", "Study", "Shopping"];
   const today = toDateId(new Date());
   const [selectedDate, setSelectedDate] = useState(today);
   const [selectedId, setSelectedId] = useState<string | undefined>();
+
+  const { data, loading } = useGetCategory();
+  
+
+
+  
+
+
+
    const radioButtons = useMemo(
      () => [
        {
@@ -43,16 +54,17 @@ function new_task() {
             Category
           </Text>
           <View style={[localStyles.badgeContainer]}>
-            {categories.map((cat) => (
+            {data?.map((cat: Category) => (
               <TouchableOpacity
                 style={[localStyles.badge
-                  , category === cat ? localStyles.badgeActive : localStyles.badgeInactive
+                  , category === cat.Name ? localStyles.badgeActive : localStyles.badgeInactive
 
                 ]}
-                onPress={() => setCategory(cat)}
-                key={cat}
+                onPress={() => setCategory(cat.Name)}
+                key={cat.ID}
+
               >
-                <Text style={[localStyles.textColor]}>{cat}</Text>
+                <Text style={[localStyles.textColor]}>{cat.Name}</Text>
               </TouchableOpacity>
             ))}
             <TouchableOpacity style={[localStyles.perforatedBadge, localStyles.badgeInactive]}>

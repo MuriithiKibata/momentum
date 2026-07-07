@@ -48,8 +48,7 @@ function Cards({priority = "Medium", title, description, completed = false, todo
               completed || checked ? globalStyles.textStrikethrough : null,
             ]}
           >
-            Write notes on what was taught in class and check if lecturer
-            replied
+          {description}
           </Text>
           {completed ? null :
           <Badge priority={priority} label="High Priority" />
