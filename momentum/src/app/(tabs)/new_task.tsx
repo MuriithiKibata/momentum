@@ -9,7 +9,6 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { Category } from "@/types";
 function new_task() {
   const [category, setCategory] = useState<string | null>(null)
-  const categories = ["Work", "Personal", "Study", "Shopping"];
   const today = toDateId(new Date());
   const [selectedDate, setSelectedDate] = useState(today);
   const [selectedId, setSelectedId] = useState<string | undefined>();
@@ -18,7 +17,7 @@ function new_task() {
   
 
 
-  
+
 
 
 

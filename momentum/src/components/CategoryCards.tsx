@@ -10,6 +10,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 interface CategoryProps {
     category: string,
     description: string,
+    active?: number
 
 }
 
@@ -22,7 +23,7 @@ const iconMap: Record<string, JSX.Element> = {
 };
 
 
-function CategoryCards({category, description}: CategoryProps) {
+function CategoryCards({category, description, active}: CategoryProps) {
   return (
     <>
       <TouchableOpacity style={[globalStyles.card, localStyles.cardWidth]}>
@@ -36,7 +37,7 @@ function CategoryCards({category, description}: CategoryProps) {
           >
             {iconMap[category]}
           </View>
-          <Badge label={"12 active"} textStyle={localStyles.textStyling} />
+          <Badge label={`${active} active`} textStyle={localStyles.textStyling} />
         </View>
         <View>
           <Text style={[globalStyles.title, localStyles.titleMargin]}>

@@ -21,7 +21,7 @@
 
 
   export type Todo = {
-    id: number;
+    ID: number;
     Name: string;
     Priority: "High" | "Medium" | "Low";
     Description?: string | null;
@@ -36,4 +36,5 @@
   export type Category = {
     ID: number;
     Name: string;
+    todo_count: number;
   }

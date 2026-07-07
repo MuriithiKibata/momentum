@@ -13,7 +13,7 @@ export default function useGetCategory() {
             setToken(token);
         };
         fetchToken();
-    })
+    }, [])
 
 
 
@@ -38,6 +38,6 @@ export default function useGetCategory() {
             } else return []
         }
         getData()
-    })
+    }, [])
     return { data, loading}
 }
