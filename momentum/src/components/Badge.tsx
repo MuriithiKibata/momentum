@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { StyleSheet, StyleProp, ViewStyle, TextStyle } from 'react-native'
 
-type BadgePriority = 'High' | 'Medium' | 'Low';
+type BadgePriority = 'High' | 'Medium' | 'Normal';
 
 interface BadgeProps {
     priority?: BadgePriority;
@@ -11,10 +11,10 @@ interface BadgeProps {
     textStyle?: StyleProp<TextStyle>;
 }
 
-function Badge({priority = "Low", label, style, textStyle}: BadgeProps) {
+function Badge({priority = "Normal", label, style, textStyle}: BadgeProps) {
   return (
    <View style={[styles.container, style, backgroundColors[priority] , styles.container]}>
-    <Text style={[styles.text, textColors[priority], textStyle]}>{label}</Text>
+    <Text style={[styles.text, textColors[priority], textStyle]}>{`${priority} Priority`}</Text>
    </View>
   )
 }
@@ -38,13 +38,13 @@ const styles = StyleSheet.create({
 const backgroundColors: Record<BadgePriority, ViewStyle> = {
   High: { backgroundColor: "#FF6B6B" }, // Red
   Medium: { backgroundColor: "#FFA726" }, // Orange
-  Low: { backgroundColor: "#e2e8f0" }, // Slate
+  Normal: { backgroundColor: "#e2e8f0" }, // Slate
 };
 
 const textColors: Record<BadgePriority, TextStyle> = {
   High: { color: "#FECACA" }, // White text for high priority
   Medium: { backgroundColor: "#FFA726" }, // White text for medium priority
-  Low: { backgroundColor: "#e2e8f0" }, // Dark text for low priority
+  Normal: { backgroundColor: "#e2e8f0" }, // Dark text for low priority
 };
 
 

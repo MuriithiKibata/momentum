@@ -7,32 +7,74 @@ import RadioGroup from "react-native-radio-buttons-group";
 import useGetCategory from "../Queries/categoryQuery";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Category } from "@/types";
+import useNewTaskQuery from "../Queries/newTaskQuery";
+
+
+interface Task {
+  name: string;
+  description: string;
+  category: number | string;
+  date: string;
+  priority: string;
+}
+
+
 function new_task() {
-  const [category, setCategory] = useState<string | null>(null)
+ 
+  const { data: newTask, loading: postingTask, handlePostTask } = useNewTaskQuery()
+  const [category, setCategory] = useState<string>("")
   const today = toDateId(new Date());
   const [selectedDate, setSelectedDate] = useState(today);
   const [selectedId, setSelectedId] = useState<string | undefined>();
-
   const { data, loading } = useGetCategory();
+  const priority: string = selectedId === "1" ? "Normal" : selectedId === "2" ? "High" : selectedId === "3" ? "Medium" : "";
+   const initialTaskState: Task = {
+     name: "",
+     description: "",
+     category: 0,
+     date: today,
+     priority: "",
+   };
+  const [ task, setNewTask] = useState<Task>(initialTaskState);
   
 
 
+  const handleChange = (name: string, value: string | number) => {
+    setNewTask((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  }
 
 
+  const handleSubmit = async (data: Task) => {
+   await handlePostTask(data)
+
+    setNewTask(initialTaskState)
+  }
+
+console.log(task)
 
 
    const radioButtons = useMemo(
      () => [
        {
-         id: "1", 
+         id: "Normal", 
          label: "Normal",
          value: "Normal",
        },
        {
-         id: "2",
-         label: "Urgent",
-         value: "Urgent",
+         id: "High",
+         label: "High",
+         value: "High",
        },
+       {
+        "id": "Medium",
+        "label": "Medium",
+        "value": "Medium"
+       }
      ],
      []
    );
@@ -46,7 +88,9 @@ function new_task() {
       >
         <TextInput
           placeholder="Task Title"
+          onChangeText={(text) => handleChange("name", text)}
           style={[localStyles.input, globalStyles.shadow_small]}
+          value={task.name}
         />
         <View style={[localStyles.cardContainer]}>
           <Text style={[globalStyles.title, localStyles.titleStyling]}>
@@ -55,18 +99,21 @@ function new_task() {
           <View style={[localStyles.badgeContainer]}>
             {data?.map((cat: Category) => (
               <TouchableOpacity
-                style={[localStyles.badge
-                  , category === cat.Name ? localStyles.badgeActive : localStyles.badgeInactive
-
+                style={[
+                  localStyles.badge,
+                  task.category === cat.ID
+                    ? localStyles.badgeActive
+                    : localStyles.badgeInactive,
                 ]}
-                onPress={() => setCategory(cat.Name)}
+                onPress={() => handleChange("category", cat.ID)}
                 key={cat.ID}
-
               >
                 <Text style={[localStyles.textColor]}>{cat.Name}</Text>
               </TouchableOpacity>
             ))}
-            <TouchableOpacity style={[localStyles.perforatedBadge, localStyles.badgeInactive]}>
+            <TouchableOpacity
+              style={[localStyles.perforatedBadge, localStyles.badgeInactive]}
+            >
               <AntDesign name="plus" size={15} color="#FFFF" />
               <Text style={[localStyles.perforatedTextColor]}>New</Text>
             </TouchableOpacity>
@@ -80,12 +127,12 @@ function new_task() {
             <Calendar
               calendarActiveDateRanges={[
                 {
-                  startId: selectedDate,
-                  endId: selectedDate,
+                  startId: task.date,
+                  endId: task.date,
                 },
               ]}
               calendarMonthId={today}
-              onCalendarDayPress={setSelectedDate}
+              onCalendarDayPress={(newDate) => handleChange("date", newDate)}
             />
           </View>
         </View>
@@ -96,7 +143,9 @@ function new_task() {
             globalStyles.shadow_small,
             { height: 100 },
           ]}
+          onChangeText={(text) => handleChange("description", text)}
           multiline={true}
+          value={task.description}
         />
         <View style={[localStyles.cardContainer]}>
           <Text style={[globalStyles.title, localStyles.titleStyling]}>
@@ -104,13 +153,21 @@ function new_task() {
           </Text>
           <RadioGroup
             radioButtons={radioButtons}
-            onPress={setSelectedId}
-            selectedId={selectedId}
-            containerStyle={{ flexDirection: "row", gap: 20, marginTop: 10, borderColor: colors.primary }}
+            onPress={(priority) => handleChange("priority", priority)}
+            selectedId={task.priority}
+            containerStyle={{
+              flexDirection: "row",
+              gap: 20,
+              marginTop: 10,
+              borderColor: colors.primary,
+            }}
           />
         </View>
       </ScrollView>
-      <TouchableOpacity style={[localStyles.button]}>
+      <TouchableOpacity
+        style={[localStyles.button]}
+        onPress={() => handleSubmit(task)}
+      >
         <AntDesign name="check-circle" size={24} color="#FFFF" />
         <Text style={localStyles.buttonText}>Save Task</Text>
       </TouchableOpacity>

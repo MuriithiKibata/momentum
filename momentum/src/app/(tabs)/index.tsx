@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import Cards from '@/components/Cards';
 
 import { colors } from '@/colors';
@@ -7,6 +7,7 @@ import Feather from "@expo/vector-icons/Feather";
 import { router } from 'expo-router';
 import useTodos from '../Queries/todosQuery';
 import { Todo } from '@/types';
+import { globalStyles } from '@/styles/global';
 
 function index() {
 
@@ -24,6 +25,14 @@ const { loading, data} = useTodos()
 
   return (
     <View style={styles.container}>
+      <Text style={[globalStyles.title]}>
+        Today's Tasks
+      </Text>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        style={{ flex: 1 }}
+        contentContainerStyle={{ gap: 15, paddingBottom: 100 }}
+      >
       {data?.map((todo:Todo) => (
 
         <Cards
@@ -35,7 +44,7 @@ const { loading, data} = useTodos()
           completed={todo.Completed}
         />
       ))}
-
+      </ScrollView>
       <TouchableOpacity
         style={styles.button}
         onPress={() => {

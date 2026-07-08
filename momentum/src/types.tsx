@@ -23,7 +23,7 @@
   export type Todo = {
     ID: number;
     Name: string;
-    Priority: "High" | "Medium" | "Low";
+    Priority: "High" | "Medium" | "Normal";
     Description?: string | null;
     DateDue: Date | string; // Often serialized as an ISO string over JSON
     Completed: boolean;

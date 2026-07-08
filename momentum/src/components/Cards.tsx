@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import Badge from "./Badge";
 import { Checkbox } from "expo-checkbox";
 import { Todo } from "@/types";
-type priority = "High" | "Medium" | "Low";
+type priority = "High" | "Medium" | "Normal";
 interface CardsProps {
     title?: string;
     description?: string;
