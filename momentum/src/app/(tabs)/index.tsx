@@ -11,7 +11,7 @@ import { globalStyles } from '@/styles/global';
 
 function index() {
 
-const { loading, data} = useTodos()
+const { loading, data, fetchData} = useTodos()
 
   if (loading) {
     return (
@@ -21,7 +21,7 @@ const { loading, data} = useTodos()
     )
   }
 
-
+  console.log(data)
 
   return (
     <View style={styles.container}>
@@ -38,10 +38,7 @@ const { loading, data} = useTodos()
         <Cards
           key={todo.ID}
           todo={todo}
-          title={todo.Name}
-          description={todo.Description ?? undefined}
-          priority={todo.Priority}
-          completed={todo.Completed}
+          fetchTodos={fetchData}
         />
       ))}
       </ScrollView>

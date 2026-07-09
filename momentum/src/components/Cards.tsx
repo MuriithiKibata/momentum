@@ -4,39 +4,44 @@ import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import Badge from "./Badge";
 import { Checkbox } from "expo-checkbox";
 import { Todo } from "@/types";
+import useCompleteTodoQuery from "@/app/Queries/completeTodoQuery";
 type priority = "High" | "Medium" | "Normal";
 interface CardsProps {
-    title?: string;
-    description?: string;
-    priority?: priority;
-    completed?: boolean;
-    todo?: Todo;
+  todo?: Todo;
+  fetchTodos?: () => void;
 }
 
-function Cards({priority = "Medium", title, description, completed = false, todo}: CardsProps) {
+function Cards({todo, fetchTodos}: CardsProps) {
   const [checked, setChecked] = useState(false);
+  const { handleCompleteTodo, loading } = useCompleteTodoQuery() 
 
+  const handleComplete = async (id: number | undefined, newValue: boolean): Promise<void> => {
+   setChecked(newValue);
+   await handleCompleteTodo(id)
+  fetchTodos?.()
+
+  };
 
   return (
     <View
       style={[
         globalStyles.flexContainer,
         globalStyles.card,
-        borderColors[priority],
+        borderColors[todo?.Priority || "Low"],
       ]}
     >
       <View style={globalStyles.flexRowContainer}>
         <Checkbox
           style={styles.checkbox}
-          value={completed ? true : checked}
-          disabled={completed}
-          onValueChange={(newValue) => setChecked(newValue)}
+          value={todo?.Completed ? true : checked}
+          disabled={todo?.Completed}
+          onValueChange={(newValue) => handleComplete(todo?.ID, newValue)}
         />
         <View style={globalStyles.flexColumnContainer}>
           <Text
             style={[
               globalStyles.title,
-            completed || checked ? globalStyles.textStrikethrough : null,
+            todo?.Completed || checked ? globalStyles.textStrikethrough : null,
             ]}
           >
             {todo?.Name}
@@ -45,13 +50,13 @@ function Cards({priority = "Medium", title, description, completed = false, todo
           <Text
             style={[
               globalStyles.text,
-              completed || checked ? globalStyles.textStrikethrough : null,
+              todo?.Completed || checked ? globalStyles.textStrikethrough : null,
             ]}
           >
-          {description}
+          {todo?.Description}
           </Text>
-          {completed ? null :
-          <Badge priority={priority} label="High Priority" />
+          {todo?.Completed? null :
+          <Badge priority={todo?.Priority} label="High Priority" />
 }
         </View>
       </View>

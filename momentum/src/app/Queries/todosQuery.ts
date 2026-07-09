@@ -45,7 +45,7 @@ function useTodos() {
         getData()
      }, [])
 
-     return { data, loading}
+     return { data, loading, fetchData}
 }
 
 export default useTodos
