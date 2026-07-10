@@ -11,6 +11,16 @@ function category() {
   const { data, loading } = useGetCategory();
 
 
+
+  if (loading) {
+    return (
+      <Text style={[globalStyles.font, globalStyles.textSmall]}>
+        Loading...
+      </Text>
+    );
+  }
+
+
   return (
     <ScrollView style={[localStyles.parentPadding]}>
       <View style={[localStyles.container, localStyles.margin]}>
@@ -23,7 +33,7 @@ function category() {
         >
           Category
         </Text>
-        <TouchableOpacity style={[localStyles.container]}>
+        {/* <TouchableOpacity style={[localStyles.container]}>
           <AntDesign
             name="plus"
             size={15}
@@ -35,7 +45,7 @@ function category() {
           >
             New
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <View style={[localStyles.layout]}>
         {data?.map((cat: Category) => (

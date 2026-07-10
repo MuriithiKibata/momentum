@@ -19,11 +19,16 @@ const iconMap: Record<string, JSX.Element> = {
   "Shopping": <MaterialIcons name="shopping-cart" size={24} color={colors.primary} />,
   "Health": <AntDesign name="heart" size={24} color={colors.gray} />,
   "Work": <Entypo name="briefcase" size={24} color={colors.primary} />,
+  "School": <Ionicons name="school" size={24} color={colors.primary} />,
   "Other": <AntDesign name="appstore" size={24} color={colors.primary} />
 };
 
 
 function CategoryCards({category, description, active}: CategoryProps) {
+
+
+  console.log(active)
+
   return (
     <>
       <TouchableOpacity style={[globalStyles.card, localStyles.cardWidth]}>
@@ -37,7 +42,7 @@ function CategoryCards({category, description, active}: CategoryProps) {
           >
             {iconMap[category]}
           </View>
-          <Badge label={`${active} active`} textStyle={localStyles.textStyling} />
+          <Badge number_active={active} textStyle={localStyles.textStyling} />
         </View>
         <View>
           <Text style={[globalStyles.title, localStyles.titleMargin]}>

@@ -21,7 +21,6 @@ const { loading, data, fetchData} = useTodos()
     )
   }
 
-  console.log(data)
 
   return (
     <View style={styles.container}>

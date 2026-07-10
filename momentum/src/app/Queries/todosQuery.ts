@@ -4,7 +4,7 @@ import { GET_FETCH_OPTIONS } from "@/option";
 import { getToken } from "@/lib/getToken";
 import React, { useEffect, useState } from 'react'
 
-import { Todo } from "@/types";
+
 function useTodos() {
     const [token, setToken] = useState()
     const API_URL =

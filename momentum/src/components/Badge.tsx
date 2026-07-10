@@ -6,15 +6,24 @@ type BadgePriority = 'High' | 'Medium' | 'Normal';
 
 interface BadgeProps {
     priority?: BadgePriority;
-    label: string;
+    label?: string;
     style?: StyleProp<ViewStyle>;
     textStyle?: StyleProp<TextStyle>;
+    number_active?: number;
 }
 
-function Badge({priority = "Normal", label, style, textStyle}: BadgeProps) {
+function Badge({priority = "Normal", label, style, textStyle, number_active = -1}: BadgeProps) {
   return (
    <View style={[styles.container, style, backgroundColors[priority] , styles.container]}>
-    <Text style={[styles.text, textColors[priority], textStyle]}>{`${priority} Priority`}</Text>
+    {
+    (number_active > -1) ? (
+        <Text style={[styles.text, textColors[priority], textStyle]}>{`${number_active} active`}</Text>
+      ) : (
+
+        <Text style={[styles.text, textColors[priority], textStyle]}>{`${priority} Priority`}</Text>
+      )
+    }
+
    </View>
   )
 }
